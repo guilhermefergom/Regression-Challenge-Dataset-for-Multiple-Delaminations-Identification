@@ -41,8 +41,9 @@ Each row in the output file corresponds to the parameters for one or more delami
 
 
 ## File Naming Conventions
-- **Input Files:** Named as `strain_data_case_XX.csv`, where `XX` is the case number.
-- **Output Files:** Named as `damage_params_case_XX.csv`, where `XX` is the corresponding case number to the input file.
+- **Input Files:** Named as `input_X_damage.txt`, where `X` represents the number of delaminations (1, 2, or 3).
+- **Output Files:** Named as `output_X_damage.txt`, where `X` represents the corresponding number of delaminations in the input file.
+
 
 ## Data Generation Process
 The dataset was generated using the ANSYS Parametric Design Language (_APDL_) in conjunction with FEM simulations. The parameters of each delamination (location, size, and orientation) were randomly varied within predefined limits to ensure diversity in the dataset.

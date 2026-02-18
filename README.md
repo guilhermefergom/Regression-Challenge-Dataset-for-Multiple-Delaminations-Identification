@@ -3,47 +3,57 @@
 ## Overview
 This dataset is designed to support the development and evaluation of regression models for detecting and characterizing multiple delaminations in composite laminates. It is generated using Finite Element Method (FEM) simulations, with a focus on Structural Health Monitoring (_SHM_) applications.
 
-## Inputs
-The input data consists of simulated strain measurements collected from composite laminate plates with varying numbers of delaminations. The strains are measured along the _x_ and _y_ directions at different sensor locations on the plate.
+## ⚠️ Important: File Naming Convention
+**Please note that the file naming convention in this dataset is counter-intuitive relative to standard Machine Learning terminology.**
 
-- **Number of Sensors:** 36
-- **Strain Data:** Strain values in the _x_-direction ($\epsilon_x$) and _y_-direction ($\epsilon_y$) for each sensor.
-- **Total Input Features:** 72 (36 $\epsilon_x$ values + 36 $\epsilon_y$ values)
+* **Features (Model Inputs):** Are contained in the files named `output_X_damage.txt`.
+* **Targets (Model Outputs):** Are contained in the files named `input_X_damage.txt`.
 
-### Input File Structure
-Each row in the input file represents a different simulation case with the following format:
+Please refer to the detailed descriptions below to ensure correct data loading.
 
-- Columns 1-36: Strain values in the _x_-direction ($\epsilon_x$)
-- Columns 37-72: Strain values in the _y_-direction ($\epsilon_y$)
+---
 
-## Outputs
-The outputs represent the parameters defining the delaminations in the composite laminate. Each delamination is characterized by its location, size, and orientation.
+## Features (Strain Data)
+**Source File:** `output_X_damage.txt` (where `X` is 1, 2, or 3)
 
-### Output Variables:
-1. **_x_:** _x_-coordinate of the delamination center.
-2. **_y_:** _y_-coordinate of the delamination center.
-3. **_a_:** Major semi-axis of the elliptical delamination.
-4. **_b/a_:** Aspect ratio (minor/major axis ratio) of the elliptical delamination.
-5. **$\theta$:** Orientation of the delamination ellipse relative to the _z_-axis.
+The features consist of simulated strain measurements collected from composite laminate plates.
 
-### Output File Structure
-Each row in the output file corresponds to the parameters for one or more delaminations in the same simulation case as the input file:
+-   **Number of Sensors:** 36
+-   **Data Type:** Strain values measured at specific sensor locations.
+-   **Total Input Features:** 36 columns
 
-- **Single Delamination Case:**
-  - Columns 1-5: [ $x_1$, $y_1$, $a_1$, $b/a_1$, $\theta_1$ ]
-  
-- **Two Delaminations Case:**
-  - Columns 1-10: [ $x_1$, $y_1$, $a_1$, $b/a_1$, $\theta_1$, $x_2$, $y_2$, $a_2$, $b/a_2$, $\theta_2$ ]
-  
-- **Three Delaminations Case:**
-  - Columns 1-15: [ $x_1$, $y_1$, $a_1$, $b/a_1$, $\theta_1$, $x_2$, $y_2$, $a_2$, $b/a_2$, $\theta_2$, $x_3$, $y_3$, $a_3$, $b/a_3$, $\theta_3$ ]
+### Data Structure
+Each row represents a different simulation case.
+-   **Columns 1-36:** Strain values corresponding to the 36 sensors.
 
+---
 
+## Targets (Delamination Parameters)
+**Source File:** `input_X_damage.txt` (where `X` is 1, 2, or 3)
 
-## File Naming Conventions
-- **Input Files:** Named as `input_X_damage.txt`, where `X` represents the number of delaminations (1, 2, or 3).
-- **Output Files:** Named as `output_X_damage.txt`, where `X` represents the corresponding number of delaminations in the input file.
+The targets represent the geometric parameters defining the delaminations.
 
+### Output Variables Order
+The columns appear in the following order for each delamination:
+1.  **$x$:** $x$-coordinate of the delamination center.
+2.  **$y$:** $y$-coordinate of the delamination center.
+3.  **$a$:** Major semi-axis of the elliptical delamination.
+4.  **$\theta$:** Orientation of the delamination ellipse relative to the $z$-axis (in radians).
+5.  **$b/a$:** Aspect ratio (minor/major axis ratio).
+
+### Data Structure
+Each row corresponds to the parameters for the delaminations in the corresponding row of the feature file.
+
+**Single Delamination Case (`input_1_damage.txt`):**
+- Columns 1-5: $[ x_1, y_1, a_1, \theta_1, b/a_1 ]$
+
+**Two Delaminations Case (`input_2_damage.txt`):**
+- Columns 1-10: $[ x_1, y_1, a_1, \theta_1, b/a_1, x_2, y_2, a_2, \theta_2, b/a_2 ]$
+
+**Three Delaminations Case (`input_3_damage.txt`):**
+- Columns 1-15: $[ x_1, y_1, a_1, \theta_1, b/a_1, x_2, y_2, a_2, \theta_2, b/a_2, x_3, y_3, a_3, \theta_3, b/a_3 ]$
+
+---
 
 ## Data Generation Process
 The dataset was generated using the ANSYS Parametric Design Language (_APDL_) in conjunction with FEM simulations. The parameters of each delamination (location, size, and orientation) were randomly varied within predefined limits to ensure diversity in the dataset.
@@ -54,4 +64,4 @@ This dataset is ideal for testing and comparing regression models, including Mac
 ## Citation
 If you use this dataset in your research, please cite the corresponding publication:
 
-- _Manuscript under revision._
+**Gomes, G.F., Takano, V.D.** "Strain-based identification of multiple damages in plate-like structures using artificial intelligence and metaheuristic optimization." *Machine Learning for Computational Science and Engineering*, 2:5 (2026). https://doi.org/10.1007/s44379-025-00052-w
